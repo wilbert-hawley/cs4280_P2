@@ -4,6 +4,7 @@
 #include "fileOp.h"
 #include "testscanner.h"
 #include "scanner.h"
+#include "parser.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -36,7 +37,9 @@ int main(int argc, char** argv) {
     // Testing to see if the file is actually empty before using it.
     emptyFileTest(file, filename + ".sp2022");
 
-    testScanner(file);
+    //testScanner(file);
+
+    parser(file);
 
     file.close();
     return 0;
