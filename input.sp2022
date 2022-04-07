@@ -1,18 +1,1 @@
-123abc
-proc
-main
->=
-<=
-!=
-::=
-+
-
--
-start repeat
-456_def
-aa11
-235until
-whole
-int main
-yell 1
-=  <=  >= == != : :=  +  -  *  /   %  . (  ) , { } ; [ ]
+declare xyz := whole;
