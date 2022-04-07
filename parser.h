@@ -6,9 +6,10 @@ void parse_error();
 void parser(fstream&);
 void program_(fstream&);
 void vars_(fstream&);
-
+void block_(fstream&);
 void expr_(fstream&);
 void N_(fstream&);
+void N1_(fstream&);
 void A_(fstream&);
 void M_(fstream&);
 void R_(fstream&);
