@@ -45,10 +45,11 @@ void program_(fstream &file){
 	cout << "Made it back to program_()\n";
 }
 
-/*<block> -> { <vars> <stats> }
-void block_() {
+// <block> -> { <vars> <stats> }
+void block_(fstream& file) {
 
-} */
+    return;
+}
 
 //<vars> -> empty | declare Identifier :=  whole ; <vars>
 void vars_(fstream& file) {
@@ -81,36 +82,104 @@ void vars_(fstream& file) {
 
 }
 
-/*<expr> -> <N> - <expr> | <N>
+// <expr> -> <N> - <expr> | <N>
+void expr_(fstream& file) {
+    N_(file);
+    return;
+}
 
-<N> -> <N> / <A> | <N> + <A> | <A>
+// <N> -> <N> / <A> | <N> + <A> | <A>
+void N_(fstream& file) {
 
-<A> -> <M> * <A> | <M>
+    return;
+}
 
-<M> -> % <M> |  <R>
+// <A> -> <M> * <A> | <M>
+void A_(fstream& file) {
 
-<R> -> ( <expr> ) | Identifier | Integer
+    return;
+}
 
-<stats> -> <stat>  <mStat>
+// <M> -> % <M> |  <R>
+void M_(fstream& file) {
 
-<mStat> -> empty |  <stat>  <mStat>
+    return;
+}
 
-<stat> -> <in> ; | <out> ; | <block> | <if> ; | <loop1> ; | <loop2> ; | <assign> ; | <goto> ; | <label> ;
+// <R> -> ( <expr> ) | Identifier | Integer
+void R_(fstream& file) {
 
-<in> -> listen  Identifier
+    return;
+}
 
-<out> -> yell <expr>
+// <stats> -> <stat>  <mStat>
+void stats_(fstream& file) {
 
-<if> -> if [ <expr> <RO> <expr> ] then <stat>
+    return;
+}
 
-<loop1> -> repeat  [ <expr> <RO> <expr> ]  <stat>
+// <mStat> -> empty |  <stat>  <mStat>
+void mStat_(fstream& file) {
 
-<loop2> -> repeat <stat> until [ <expr> <RO> <expr> ]
+    return;
+}
 
-<assign> -> assign Identifier  = <expr>
+// <stat> -> <in> ; | <out> ; | <block> | <if> ; | <loop1> ; | <loop2> ; | <assign> ; | <goto> ; | <label> ;
+void stat_(fstream& file) {
 
-<RO> -> >=  | <= |  ==  |   ... (three tokens here) |  !=
+    return;
+}
 
-<label> -> label Identifier
+// <in> -> listen  Identifier
+void in_(fstream& file) {
 
-<goto> ->  portal Identifier*/
+    return;
+}
+
+// <out> -> yell <expr>
+void out_(fstream& file) {
+
+    return;
+}
+
+// <if> -> if [ <expr> <RO> <expr> ] then <stat>
+void if_(fstream& file) {
+
+    return;
+}
+
+// <loop1> -> repeat  [ <expr> <RO> <expr> ]  <stat>
+void loop1_(fstream& file) {
+
+    return;
+}
+
+// <loop2> -> repeat <stat> until [ <expr> <RO> <expr> ]
+void loop2_(fstream& file) {
+
+    return;
+}
+
+// <assign> -> assign Identifier  = <expr>
+void assign_(fstream& file) {
+
+    return;
+}
+
+// <RO> -> >=  | <= |  ==  |   ... (three tokens here) |  !=
+void R0_(fstream& file) {
+
+    return;
+}
+
+// <label> -> label Identifier
+void label_(fstream& file) {
+
+    return;
+}
+
+// <goto> ->  portal Identifier*/
+void goto_(fstream& file) {
+
+    return;
+}
