@@ -3,7 +3,7 @@
 using namespace std;
 
 void parse_error();
-
+void printTree(Node*, int);
 Node* parser(fstream&);
 Node* program_(fstream&);
 Node* vars_(fstream&);

@@ -13,9 +13,40 @@ token tok;
 char nextChar;
 int lineNumber = 0;
 
+void printTree(Node* tree, int depth) {
+    if(tree) {
+        string output = "";
+        cout << output.append(depth * 2, ' ') << tree->label << endl;
+        if(tree->tok1.instance != "") {
+            cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok1.tk] << " TokenInstance: "
+                 << tree->tok1.instance << " LineNumber: " << tree->tok1.line << endl;
+            if (tree->tok2.tk != EOF_tk && tree->tok2.instance != "") {
+                cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok2.tk]
+                     << " TokenInstance: " << tree->tok2.instance << " LineNumber: " << tree->tok2.line << endl;
+                if (tree->tok3.tk != EOF_tk && tree->tok3.instance != "") {
+                    cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok3.tk]
+                         << " TokenInstance: " << tree->tok3.instance << " LineNumber: " << tree->tok3.line << endl;
+                    if (tree->tok4.tk != EOF_tk && tree->tok4.instance != "") {
+                        cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok4.tk]
+                             << " TokenInstance: " << tree->tok4.instance << " LineNumber: " << tree->tok4.line << endl;
+                        if (tree->tok5.tk != EOF_tk && tree->tok5.instance != "") {
+                            cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok5.tk]
+                                 << " TokenInstance: " << tree->tok5.instance << " LineNumber: " << tree->tok5.line << endl;
+                        }
+                    }
+                }
+            }
+        }
+        printTree(tree->child1, depth+1);
+        printTree(tree->child2, depth+1);
+        printTree(tree->child3, depth+1);
+        printTree(tree->child4, depth+1);
+    }
+}
+
 void parse_error() {
-    cout << "Error when processing " << "TokenID: " << tokenNames[tok.tk] << "     TokenInstance: "
-         << tok.instance << "     LineNumber: " << tok.line << endl;
+    cout << "Error when processing TokenID: " << tokenNames[tok.tk] << " TokenInstance: "
+         << tok.instance << " LineNumber: " << tok.line << endl;
     exit(1);
 }
 
@@ -115,7 +146,6 @@ Node* vars_(fstream& file) {
     MOD_tk, DOT_tk, LPARA_tk, RPARA_tk, COMMA_tk, LCURLY_tk, RCURLY_tk, SEMI_tk, LBRAK_tk, RBRAK_tk
 };*/
 
-//tok = scanner(file, lineNumber, nextChar);
 
 // <expr> -> <N> - <expr> | <N>
 Node* expr_(fstream& file) {

@@ -1,0 +1,27 @@
+Wilbert Hawley
+CS 4280
+4/7/22
+Project 2
+
+This project simulates parsing for a compiler. The program takes in a program using the BNF provided in class. It will output a parse tree with labeled tokens.
+
+First you must compile the program using the following command (within the program folder):
+
+    make
+
+To run the program, run the following command:
+
+    ./frontEnd [file]
+
+Where file is an optional command. Without it, you can type a program in on the terminal or redirect your file. This assumes that file has the suffix ".sp2022".
+
+To clean the folder, run the following command:
+
+    make clean
+
+Some things of note:
+    - In the scanner project, I had trouble with the EOF tag for when you read directly from a file. That is not an issue in this project.
+    - I still struggled with the line number. I hope to iron that out soon.
+    - I tried to eliminate the left recursion in the <N> function but it lead to an error so I ended up switching the <N> and the <A> and it seems to be working. I left the code for the eliminated left recursion functions in there if you want to have a look (parser.cpp lines 114 - 138).
+    - I fixed the mixing up of left and right curly braces and brackets.
+    - I'm not sure if I have the indentation correct on this project.

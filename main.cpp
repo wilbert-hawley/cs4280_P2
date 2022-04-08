@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
 
     //testScanner(file);
 
-    parser(file);
+    Node* root = parser(file);
+    printTree(root, 0);
 
     file.close();
     return 0;
