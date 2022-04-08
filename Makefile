@@ -2,8 +2,8 @@ FINAL = frontEnd
 CXX = g++
 CXXFLAGS = -Wall
 MAIN_CPP = main.cpp
-OBJS = main.o scanner.o testscanner.o fileOp.o parser.o
-DEPS = scanner.h testscanner.h token.h fileOp.h parser.h
+OBJS = main.o scanner.o fileOp.o parser.o node.o
+DEPS = scanner.h token.h fileOp.h parser.h node.h
 
 %.o: %.c $(MAIN_CPP) $(DEPS)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
