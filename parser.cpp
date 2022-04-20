@@ -20,16 +20,16 @@ void printTree(Node* tree, int depth) {
         if(tree->tok1.instance != "") {
             cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok1.tk] << " TokenInstance: "
                  << tree->tok1.instance << " LineNumber: " << tree->tok1.line << endl;
-            if (tree->tok2.tk != EOF_tk && tree->tok2.instance != "") {
+            if (tree->tok2.instance != "") {
                 cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok2.tk]
                      << " TokenInstance: " << tree->tok2.instance << " LineNumber: " << tree->tok2.line << endl;
-                if (tree->tok3.tk != EOF_tk && tree->tok3.instance != "") {
+                if (tree->tok3.instance != "") {
                     cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok3.tk]
                          << " TokenInstance: " << tree->tok3.instance << " LineNumber: " << tree->tok3.line << endl;
-                    if (tree->tok4.tk != EOF_tk && tree->tok4.instance != "") {
+                    if (tree->tok4.instance != "") {
                         cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok4.tk]
                              << " TokenInstance: " << tree->tok4.instance << " LineNumber: " << tree->tok4.line << endl;
-                        if (tree->tok5.tk != EOF_tk && tree->tok5.instance != "") {
+                        if (tree->tok5.instance != "") {
                             cout << output.append(depth * 2, ' ') << "TokenID: " << tokenNames[tree->tok5.tk]
                                  << " TokenInstance: " << tree->tok5.instance << " LineNumber: " << tree->tok5.line << endl;
                         }
@@ -67,32 +67,32 @@ Node* parser(fstream& file) {
 
 //<program> -> <vars> main <block>
 Node* program_(fstream &file){
-    cout << "Entering program_()\n";
+    //cout << "Entering program_()\n";
     Node* newNode = getNode("<program>");
     newNode->child1 = vars_(file);
 	if(tok.tk == MAIN_tk) {
-	    cout << "Found MAIN_tk\n";
+	    //cout << "Found MAIN_tk\n";
 	    newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child2 = block_(file);
         return newNode;
 	} else parse_error();
-	cout << "Made it back to program_()\n";
+	//cout << "Made it back to program_()\n";
 	return NULL;
 
 }
 
 // <block> -> { <vars> <stats> }
 Node* block_(fstream& file) {
-    cout << "Entering block_()\n";
+    //cout << "Entering block_()\n";
     if(tok.tk == LCURLY_tk) {
-        cout << "Found LCURLY_tk in block_()\n";
+        //cout << "Found LCURLY_tk in block_()\n";
         Node* newNode = getNode("<block>");
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = vars_(file);
         newNode->child2 = stats_(file);
         if(tok.tk == RCURLY_tk) {
-            cout << "Found RCURLY_tk in block_()\n";
+            //cout << "Found RCURLY_tk in block_()\n";
             tok = scanner(file, lineNumber, nextChar);
             return newNode;
         } else parse_error();
@@ -102,26 +102,26 @@ Node* block_(fstream& file) {
 
 //<vars> -> empty | declare Identifier :=  whole ; <vars>
 Node* vars_(fstream& file) {
-    cout << "Entering vars()\n";
+    //cout << "Entering vars()\n";
     Node* newNode = getNode("<vars>");
     if(tok.tk == DECLARE_tk) {
-        cout << "Found declare in vars()\n";
+        //cout << "Found declare in vars()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == ID_tk) {
-            cout << "Found Identifier in vars()\n";
+            //cout << "Found Identifier in vars()\n";
             newNode->tok2 = tok;
             tok = scanner(file, lineNumber, nextChar);
             if(tok.tk == COLEQU_tk) {
-                cout << "Found colon equal in vars()\n";
+                //cout << "Found colon equal in vars()\n";
                 newNode->tok3 = tok;
                 tok = scanner(file, lineNumber, nextChar);
                 if(tok.tk == WHOLE_tk) {
-                    cout << "Found whole in vars()\n";
+                    //cout << "Found whole in vars()\n";
                     newNode->tok4 = tok;
                     tok = scanner(file, lineNumber, nextChar);
                     if(tok.tk == SEMI_tk) {
-                        cout << "Found semicolon in vars()\n";
+                        //cout << "Found semicolon in vars()\n";
                         newNode->tok5 = tok;
                         tok = scanner(file, lineNumber, nextChar);
                         newNode->child1 = vars_(file);
@@ -132,7 +132,7 @@ Node* vars_(fstream& file) {
         } else parse_error();
     }
     else {
-        cout << "Returning empty <vars>\n";
+        //cout << "Returning empty <vars>\n";
         return newNode;
     }
     return getNode("ERROR vars_");
@@ -150,11 +150,11 @@ Node* vars_(fstream& file) {
 // <expr> -> <N> - <expr> | <N>
 Node* expr_(fstream& file) {
     Node* newNode = getNode("<expr>");
-    cout << "Entering expr_()\n";
+    //cout << "Entering expr_()\n";
     newNode->child1 = N_(file);
 
     if(tok.tk == SUB_tk){
-        cout << "Found minus in expr_()\n";
+        //cout << "Found minus in expr_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child2 = expr_(file);
@@ -190,18 +190,18 @@ void N1_(fstream& file) {
 
 // N -> <A> / <N> | <A> + <N> | <A>
 Node* N_(fstream& file) {
-    cout << "Entering N_()\n";
+    //cout << "Entering N_()\n";
     Node* newNode = getNode("<N>");
     newNode->child1 = A_(file);
     if(tok.tk == SLASH_tk) {
-        cout << "Found SLAHS_tk in N()\n";
+        //cout << "Found SLAHS_tk in N()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = N_(file);
         return newNode;
     }
     else if (tok.tk == PLUS_tk) {
-        cout << "Found PLUS_tk in N()\n";
+        //cout << "Found PLUS_tk in N()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = N_(file);
@@ -212,11 +212,11 @@ Node* N_(fstream& file) {
 
 // <A> -> <M> * <A> | <M>
 Node* A_(fstream& file) {
-    cout << "Entering A_()\n";
+    //cout << "Entering A_()\n";
     Node* newNode = getNode("<A>");
     newNode->child1 = M_(file);
     if(tok.tk == MULT_tk) {
-        cout << "Found MULT_tk in A_()\n";
+        //cout << "Found MULT_tk in A_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child2 = A_(file);
@@ -226,10 +226,10 @@ Node* A_(fstream& file) {
 
 // <M> -> % <M> |  <R>
 Node* M_(fstream& file) {
-    cout << "Entering M_()\n";
+    //cout << "Entering M_()\n";
     Node* newNode = getNode("<M>");
     if(tok.tk == MOD_tk) {
-        cout << "Found MOD_tk in M_()\n";
+        //cout << "Found MOD_tk in M_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = M_(file);
@@ -242,24 +242,24 @@ Node* M_(fstream& file) {
 
 // <R> -> ( <expr> ) | Identifier | Integer
 Node* R_(fstream& file) {
-    cout << "Entering R_()\n";
+    //cout << "Entering R_()\n";
     Node* newNode = getNode("<R>");
     if(tok.tk == LPARA_tk) {
-        cout << "Found LPARA_tk in R_()\n";
+        //cout << "Found LPARA_tk in R_()\n";
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = expr_(file);
         if(tok.tk == RPARA_tk) {
-            cout << "Found RPARA_tk in R_()\n";
+            //cout << "Found RPARA_tk in R_()\n";
             tok = scanner(file, lineNumber, nextChar);
             return NULL;
         } else parse_error();
     } else if(tok.tk == ID_tk) {
-        cout << "Found ID_tk in R_()\n";
+        //cout << "Found ID_tk in R_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         return newNode;
     } else if(tok.tk == NUM_tk) {
-        cout << "Found NUM_tk in R_()\n";
+        //cout << "Found NUM_tk in R_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         return newNode;
@@ -270,7 +270,7 @@ Node* R_(fstream& file) {
 
 // <stats> -> <stat>  <mStat>
 Node* stats_(fstream& file) {
-    cout << "Entering stats_()\n";
+    //cout << "Entering stats_()\n";
     Node* newNode = getNode("<stats>");
     newNode->child1 = stat_(file);
     newNode->child2 = mStat_(file);
@@ -279,7 +279,7 @@ Node* stats_(fstream& file) {
 
 // <mStat> -> empty |  <stat>  <mStat>
 Node* mStat_(fstream& file) {
-    cout << "Entering mStat()\n";
+    //cout << "Entering mStat()\n";
     Node* newNode = getNode("<mStat>");
     switch(tok.tk) {
         case LISTEN_tk: // in
@@ -308,7 +308,7 @@ Node* mStat_(fstream& file) {
 
 // <stat> -> <in> ; | <out> ; | <block> | <if> ; | <loop1> ; | <loop2> ; | <assign> ; | <goto> ; | <label> ;
 Node* stat_(fstream& file) {
-    cout << "Entering stat_()\n";
+    //cout << "Entering stat_()\n";
     Node* newNode = getNode("<stat>");
     switch(tok.tk) {
         case LISTEN_tk: // in
@@ -341,12 +341,12 @@ Node* stat_(fstream& file) {
             newNode->child1 = label_(file);
             break;
         default:
-            cout << "Messed up in stat_()\n";
+            //cout << "Messed up in stat_()\n";
             parse_error();
     }
 
     if (tok.tk == SEMI_tk) {
-        cout << "Found SEMI_tk in stat_()\n";
+        //cout << "Found SEMI_tk in stat_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         return newNode;
@@ -357,14 +357,14 @@ Node* stat_(fstream& file) {
 
 // <in> -> listen  Identifier
 Node* in_(fstream& file) {
-    cout << "Entering in_()\n";
+    //cout << "Entering in_()\n";
     Node* newNode = getNode("<in>");
     if(tok.tk == LISTEN_tk) {
-        cout << "Found LISTEN_tk in in_()\n";
+        //cout << "Found LISTEN_tk in in_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == ID_tk) {
-            cout << "Found ID_tk in in_()\n";
+            //cout << "Found ID_tk in in_()\n";
             newNode->tok2 = tok;
             tok = scanner(file, lineNumber, nextChar);
             return newNode;
@@ -375,10 +375,10 @@ Node* in_(fstream& file) {
 
 // <out> -> yell <expr>
 Node* out_(fstream& file) {
-    cout << "Entering out_()\n";
+    //cout << "Entering out_()\n";
     Node* newNode = getNode("<out>");
     if(tok.tk == YELL_tk) {
-        cout << "Found YELL_tk in out_()\n";
+        //cout << "Found YELL_tk in out_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = expr_(file);
@@ -389,23 +389,23 @@ Node* out_(fstream& file) {
 
 // <if> -> if [ <expr> <RO> <expr> ] then <stat>
 Node* if_(fstream& file) {
-    cout << "Entering if_()\n";
+    //cout << "Entering if_()\n";
     Node* newNode = getNode("<if>");
     if(tok.tk == IF_tk) {
-        cout << "Found IN_tk in if_()\n";
+        //cout << "Found IN_tk in if_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == LBRAK_tk) {
-            cout << "Found LBRAK_tk in if_()\n";
+            //cout << "Found LBRAK_tk in if_()\n";
             tok = scanner(file, lineNumber, nextChar);
             newNode->child1 = expr_(file);
             newNode->child2 = R0_(file);
             newNode->child3 = expr_(file);
             if(tok.tk == RBRAK_tk) {
-                cout << "Found RBRAK_tk in if_()\n";
+                //cout << "Found RBRAK_tk in if_()\n";
                 tok = scanner(file, lineNumber, nextChar);
                 if(tok.tk == THEN_tk) {
-                    cout << "Found THEN_tk in if_()\n";
+                    //cout << "Found THEN_tk in if_()\n";
                     newNode->tok2 = tok;
                     tok = scanner(file, lineNumber, nextChar);
                     newNode->child4 = stat_(file);
@@ -419,20 +419,20 @@ Node* if_(fstream& file) {
 
 // <loop1> -> repeat  [ <expr> <RO> <expr> ]  <stat>
 Node* loop1_(fstream& file) {
-    cout << "Entering loop1_()\n";
+    //cout << "Entering loop1_()\n";
     Node* newNode = getNode("<loop1>");
     newNode->tok1.tk = REPEAT_tk;
     newNode->tok1.instance = "repeat";
     newNode->tok1.line = lineNumber;
-    cout << "Found REAPEAT_tk in loop1_()\n";
+    //cout << "Found REAPEAT_tk in loop1_()\n";
     if(tok.tk == LBRAK_tk) {
-        cout << "Found LBRAK_tk in loop1_()\n";
+        //cout << "Found LBRAK_tk in loop1_()\n";
         tok = scanner(file, lineNumber, nextChar);
         newNode->child1 = expr_(file);
         newNode->child2 = R0_(file);
         newNode->child3 = expr_(file);
         if(tok.tk == RBRAK_tk) {
-            cout << "Found RBRAK_tk in loop1_()\n";
+            //cout << "Found RBRAK_tk in loop1_()\n";
             tok = scanner(file, lineNumber, nextChar);
             newNode->child4 = stat_(file);
             return newNode;
@@ -443,25 +443,25 @@ Node* loop1_(fstream& file) {
 
 // <loop2> -> repeat <stat> until [ <expr> <RO> <expr> ]
 Node* loop2_(fstream& file) {
-    cout << "Entering loop2_()\n";
-    cout << "Found REAPEAT_tk in loop2_()\n";
+    //cout << "Entering loop2_()\n";
+    //cout << "Found REAPEAT_tk in loop2_()\n";
     Node* newNode = getNode("<loop2>");
     newNode->tok1.tk = REPEAT_tk;
     newNode->tok1.instance = "repeat";
     newNode->tok1.line = lineNumber;
     newNode->child1 = stat_(file);
     if(tok.tk == UNTIL_tk) {
-        cout << "Found UNTIL_tk in loop2_()\n";
+        //cout << "Found UNTIL_tk in loop2_()\n";
         newNode->tok2 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == LBRAK_tk) {
-            cout << "Found LBRAK_tk in loop2_()\n";
+            //cout << "Found LBRAK_tk in loop2_()\n";
             tok = scanner(file, lineNumber, nextChar);
             newNode->child2 = expr_(file);
             newNode->child3 = R0_(file);
             newNode->child4 = expr_(file);
             if(tok.tk == RBRAK_tk) {
-                cout << "Found RBRAK_tk in loop2()\n";
+                //cout << "Found RBRAK_tk in loop2()\n";
                 tok = scanner(file, lineNumber, nextChar);
                 return newNode;
             } else parse_error();
@@ -472,18 +472,18 @@ Node* loop2_(fstream& file) {
 
 // <assign> -> assign Identifier  = <expr>
 Node* assign_(fstream& file) {
-    cout << "Entering assign_()\n";
+    //cout << "Entering assign_()\n";
     Node* newNode = getNode("<assign>");
     if(tok.tk == ASSIGN_tk) {
-        cout << "Found ASSIGN_tk in assign_()\n";
+        //cout << "Found ASSIGN_tk in assign_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == ID_tk) {
-            cout << "Found ID_tk in assign_()\n";
+           // cout << "Found ID_tk in assign_()\n";
             newNode->tok2 = tok;
             tok = scanner(file, lineNumber, nextChar);
             if(tok.tk == EQUAL_tk) {
-                cout << "Found EQUAL_tk in assign_()\n";
+                //cout << "Found EQUAL_tk in assign_()\n";
                 newNode->tok3 = tok;
                 tok = scanner(file, lineNumber, nextChar);
                 newNode->child1 = expr_(file);
@@ -507,39 +507,39 @@ Node* assign_(fstream& file) {
 
 // <RO> -> >=  | <= |  ==  |   ... (three tokens here) |  !=
 Node* R0_(fstream& file) {
-    cout << "Entering R0_()\n";
+    //cout << "Entering R0_()\n";
     Node* newNode = getNode("<R0>");
     switch(tok.tk) {
         case GREAT_tk:
-            cout << "Found GREAT_tk in R0_()\n";
+            //cout << "Found GREAT_tk in R0_()\n";
             newNode->tok1 = tok;
             tok = scanner(file, lineNumber, nextChar);
             break;
         case LESS_tk:
-            cout << "Found LESS_tk in R0()\n";
+            //cout << "Found LESS_tk in R0()\n";
             newNode->tok1 = tok;
             tok = scanner(file, lineNumber, nextChar);
             break;
         case DUBEQUAL_tk:
-            cout << "Found DUBEQUAL_tk in R0()\n";
+            //cout << "Found DUBEQUAL_tk in R0()\n";
             newNode->tok1 = tok;
             tok = scanner(file, lineNumber, nextChar);
             break;
         case NOTEQU_tk:
-            cout << "Found NOTEQU_tk in R0()\n";
+           // cout << "Found NOTEQU_tk in R0()\n";
             newNode->tok1 = tok;
             tok = scanner(file, lineNumber, nextChar);
             break;
         case DOT_tk:
-            cout << "Found DOT_tk in R0()\n";
+            //cout << "Found DOT_tk in R0()\n";
             newNode->tok1 = tok;
             tok = scanner(file, lineNumber, nextChar);
             if(tok.tk == DOT_tk) {
-                cout << "Found DOT_tk in R0()\n";
+                //cout << "Found DOT_tk in R0()\n";
                 newNode->tok2 = tok;
                 tok = scanner(file, lineNumber, nextChar);
                 if(tok.tk == DOT_tk) {
-                    cout << "Found DOT_tk in R0()\n";
+                   // cout << "Found DOT_tk in R0()\n";
                     newNode->tok3 = tok;
                     tok = scanner(file, lineNumber, nextChar);
                     break;
@@ -554,14 +554,14 @@ Node* R0_(fstream& file) {
 
 // <label> -> label Identifier
 Node* label_(fstream& file) {
-    cout << "Entering label_()\n";
+    //cout << "Entering label_()\n";
     Node* newNode = getNode("<label>");
     if(tok.tk == LABEL_tk) {
-        cout << "Found LABEL_tk in label_()\n";
+        //cout << "Found LABEL_tk in label_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == ID_tk) {
-            cout << "Found ID_tk in label_()\n";
+            //cout << "Found ID_tk in label_()\n";
             newNode->tok2 = tok;
             tok = scanner(file, lineNumber, nextChar);
             return newNode;
@@ -572,14 +572,14 @@ Node* label_(fstream& file) {
 
 // <goto> ->  portal Identifier*/
 Node* goto_(fstream& file) {
-    cout << "Entering goto_()\n";
+    //cout << "Entering goto_()\n";
     Node* newNode = getNode("<goto>");
     if(tok.tk == PORTAL_tk) {
-        cout << "Found PORTAL_tk in goto_()\n";
+        //cout << "Found PORTAL_tk in goto_()\n";
         newNode->tok1 = tok;
         tok = scanner(file, lineNumber, nextChar);
         if(tok.tk == ID_tk) {
-            cout << "Found ID_tk in goto_()\n";
+            //cout << "Found ID_tk in goto_()\n";
             newNode->tok2 = tok;
             tok = scanner(file, lineNumber, nextChar);
             return newNode;

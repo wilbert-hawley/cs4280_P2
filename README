@@ -22,6 +22,6 @@ To clean the folder, run the following command:
 Some things of note:
     - In the scanner project, I had trouble with the EOF tag for when you read directly from a file. That is not an issue in this project.
     - I still struggled with the line number. I hope to iron that out soon.
-    - I tried to eliminate the left recursion in the <N> function but it lead to an error so I ended up switching the <N> and the <A> and it seems to be working. I left the code for the eliminated left recursion functions in there if you want to have a look (parser.cpp lines 114 - 138).
+    - I tried to eliminate the left recursion in the <N> function but it lead to an error so I ended up switching the <N> and the <A> and it seems to be working. I left the code for the eliminated left recursion functions in there if you want to have a look (parser.cpp lines 165 - 189).
     - I fixed the mixing up of left and right curly braces and brackets.
     - I'm not sure if I have the indentation correct on this project.
